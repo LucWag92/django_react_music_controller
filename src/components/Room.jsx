@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Button, Typography } from '@material-ui/core';
-import CreateRoomPage from './CreateRoomPage';
-import MusicPlayer from './MusicPlayer';
+import React, { useState, useEffect } from "react";
+import { Grid, Button, Typography } from "@material-ui/core";
+import CreateRoomPage from "./CreateRoomPage";
+import MusicPlayer from "./MusicPlayer";
 
 export default (props) => {
   const { leaveRoomCallback } = props;
@@ -14,7 +14,7 @@ export default (props) => {
   const [song, setSong] = useState({});
 
   const getCurrentSong = () => {
-    fetch(`${BASE_URL}/spotify/current-song`)
+    fetch(`${BASE_URL}/spotify/current-song`, { credentials: "include" })
       .then((response) => {
         if (!response.ok) {
           return {};
@@ -23,13 +23,13 @@ export default (props) => {
         }
       })
       .then((data) => {
-        console.log('Current Song');
+        console.log("Current Song");
         console.log(data);
         setSong(data);
       });
   };
   const authenticateSpotify = () => {
-    fetch(`${BASE_URL}/spotify/is-authenticated`)
+    fetch(`${BASE_URL}/spotify/is-authenticated`, { credentials: "include" })
       .then((response) => {
         return response.json();
       })
@@ -47,12 +47,14 @@ export default (props) => {
       });
   };
   const getRoomDetails = () => {
-    fetch(`${BASE_URL}/api/get-room` + '?code=' + roomCode)
+    fetch(`${BASE_URL}/api/get-room` + "?code=" + roomCode, {
+      credentials: "include",
+    })
       .then((response) => {
         if (!response.ok) {
-          console.log('Room Info not found. --> Back to HomePage');
+          console.log("Room Info not found. --> Back to HomePage");
           leaveRoomCallback(null);
-          props.history.push('/');
+          props.history.push("/");
         }
         return response.json();
       })
@@ -79,12 +81,12 @@ export default (props) => {
 
   const leaveRoom = () => {
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
     };
     fetch(`${BASE_URL}/api/leave-room`, requestOptions).then((response) => {
       leaveRoomCallback(null);
-      props.history.push('/');
+      props.history.push("/");
     });
   };
   return (

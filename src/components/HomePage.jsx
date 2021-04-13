@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import CreateRoomPage from './CreateRoomPage';
-import JoinRoomPage from './JoinRoomPage';
-import Room from './Room';
-import { Grid, Button, ButtonGroup, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from "react";
+import CreateRoomPage from "./CreateRoomPage";
+import JoinRoomPage from "./JoinRoomPage";
+import Room from "./Room";
+import { Grid, Button, ButtonGroup, Typography } from "@material-ui/core";
 import {
   BrowserRouter as Router,
   Switch,
   Link,
   Redirect,
   Route,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-console.log('HP: ' + BASE_URL);
+console.log("HP: " + BASE_URL);
 
 export default (props) => {
   const [roomCode, setRoomCode] = useState(null);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/user-in-room`)
+    fetch(`${BASE_URL}/api/user-in-room`, { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         console.log(data.code);
@@ -51,7 +51,7 @@ export default (props) => {
       <Switch>
         <Route
           exact
-          path={'/'}
+          path={"/"}
           render={() => {
             return roomCode ? (
               <Redirect to={`/room/${roomCode}`} />
@@ -60,10 +60,10 @@ export default (props) => {
             );
           }}
         />
-        <Route path={'/join'} component={JoinRoomPage} />
-        <Route path={'/create'} component={CreateRoomPage} />
+        <Route path={"/join"} component={JoinRoomPage} />
+        <Route path={"/create"} component={CreateRoomPage} />
         <Route
-          path={'/room/:roomCode'}
+          path={"/room/:roomCode"}
           render={(props) => (
             <Room {...props} leaveRoomCallback={setRoomCode} />
           )}

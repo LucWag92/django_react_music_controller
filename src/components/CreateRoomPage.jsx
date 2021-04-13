@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Textfield from '@material-ui/core/TextField';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Link } from 'react-router-dom';
-import { Collapse } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Textfield from "@material-ui/core/TextField";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Link } from "react-router-dom";
+import { Collapse } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 export default (props) => {
   const defaultVotes = 2;
@@ -25,13 +25,14 @@ export default (props) => {
   const [updateOKMsg, setUpdateOKMsg] = useState(null);
   const [updateERMsg, setUpdateERMsg] = useState(null);
   const [votesToSkip, setVotesToSkip] = useState(votesToSkip_props);
-  const headerText = update ? `Change Room: ${roomCode}` : 'Create Room';
+  const headerText = update ? `Change Room: ${roomCode}` : "Create Room";
 
   const handleCreateRoomButtonPressed = () => {
-    console.log('Create Room');
+    console.log("Create Room");
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         votes_to_skip: votesToSkip,
         guest_can_pause: guestCanPause,
@@ -41,15 +42,15 @@ export default (props) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        props.history.push('/room/' + data.code);
+        props.history.push("/room/" + data.code);
       });
   };
 
   const handleUpdateRoomButtonPressed = () => {
-    console.log('Update Room');
+    console.log("Update Room");
     const requestOptions = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         votes_to_skip: votesToSkip,
         guest_can_pause: guestCanPause,
@@ -59,9 +60,9 @@ export default (props) => {
     fetch(`${BASE_URL}/api/update-room`, requestOptions)
       .then((response) => {
         if (response.ok) {
-          setUpdateOKMsg('Room updated successfully');
+          setUpdateOKMsg("Room updated successfully");
         } else {
-          setUpdateERMsg('Error updating room... ');
+          setUpdateERMsg("Error updating room... ");
         }
         return response.json();
       })
@@ -80,7 +81,7 @@ export default (props) => {
       <Grid item xs={12} align="center">
         <Collapse in={!!updateOKMsg || !!updateERMsg}>
           <Alert
-            severity={!!updateOKMsg ? 'success' : 'error'}
+            severity={!!updateOKMsg ? "success" : "error"}
             onClose={
               !!updateOKMsg
                 ? () => setUpdateOKMsg(null)
@@ -129,7 +130,7 @@ export default (props) => {
             required={true}
             type="number"
             defaultValue={votesToSkip}
-            inputProps={{ min: 1, style: { textAlign: 'center' } }}
+            inputProps={{ min: 1, style: { textAlign: "center" } }}
             onChange={(e) => setVotesToSkip(e.target.value)}
           />
           <FormHelperText>
@@ -147,7 +148,7 @@ export default (props) => {
           <Button
             color="secondary"
             variant="contained"
-            to={'/'}
+            to={"/"}
             component={Link}
           >
             Back

@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { TextField, Button, Grid, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default (props) => {
-  const [roomCode, setRoomCode] = useState('');
-  const [error, setError] = useState('');
+  const [roomCode, setRoomCode] = useState("");
+  const [error, setError] = useState("");
 
   const roomButtonPressed = () => {
     console.log(roomCode);
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         code: roomCode,
       }),
@@ -18,9 +19,9 @@ export default (props) => {
     fetch(`${BASE_URL}/api/join-room`, requestOptions)
       .then((response) => {
         if (response.ok) {
-          props.history.push('/room/' + roomCode);
+          props.history.push("/room/" + roomCode);
         } else {
-          setError('Room not found');
+          setError("Room not found");
         }
       })
       .catch((e) => console.log(e));
@@ -54,7 +55,7 @@ export default (props) => {
         </Button>
       </Grid>
       <Grid item xs={12} align="center">
-        <Button variant="contained" color="secondary" to={'/'} component={Link}>
+        <Button variant="contained" color="secondary" to={"/"} component={Link}>
           Back
         </Button>
       </Grid>

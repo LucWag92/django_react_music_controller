@@ -1,42 +1,45 @@
-import React from 'react';
+import React from "react";
 import {
   Grid,
   Typography,
   Card,
   IconButton,
   LinearProgress,
-} from '@material-ui/core';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import PauseIcon from '@material-ui/icons/Pause';
+} from "@material-ui/core";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import SkipNextIcon from "@material-ui/icons/SkipNext";
+import PauseIcon from "@material-ui/icons/Pause";
 
 export default (props) => {
   console.log(props);
   const progress = (props.time / props.duration) * 100;
 
   const pauseSong = () => {
-    console.log('pauseSong');
+    console.log("pauseSong");
     const requestOptions = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     };
     fetch(`${BASE_URL}/spotify/pause`, requestOptions);
   };
 
   const playSong = () => {
-    console.log('playSong');
+    console.log("playSong");
     const requestOptions = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     };
     fetch(`${BASE_URL}/spotify/play`, requestOptions);
   };
 
   const skipSong = () => {
-    console.log('skipSong');
+    console.log("skipSong");
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     };
     fetch(`${BASE_URL}/spotify/skip`, requestOptions);
   };
