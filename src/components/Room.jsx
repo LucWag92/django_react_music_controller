@@ -14,7 +14,8 @@ export default (props) => {
   const [song, setSong] = useState({});
 
   const getCurrentSong = () => {
-    fetch(`${BASE_URL}/spotify/current-song`, { credentials: "include" })
+    // fetch(`${BASE_URL}/spotify/current-song`, { credentials: "include" })
+    fetch(`${BASE_URL}/spotify/current-song`)
       .then((response) => {
         if (!response.ok) {
           return {};
